@@ -3,10 +3,10 @@ import 'dart:io';
 import 'package:auto_update_app/utils/download_file.dart';
 import 'package:flutter/material.dart';
 import 'package:open_filex/open_filex.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 import '../models/app_release.dart';
 import '../utils/save_apk_file.dart';
+import '../widgets/version_widget.dart';
 
 class UpdateLatestVersionPage extends StatefulWidget {
   const UpdateLatestVersionPage(
@@ -155,23 +155,7 @@ class _UpdateLatestVersionPageState extends State<UpdateLatestVersionPage> {
                       child: const Text("Install"),
                     ),
                     const Spacer(),
-                    FutureBuilder(
-                      future: PackageInfo.fromPlatform().then(
-                        (info) => info.version,
-                      ),
-                      builder: (_, snapshot) {
-                        if (!snapshot.hasData) {
-                          return const SizedBox();
-                        }
-
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'Version ${snapshot.data}',
-                          ),
-                        );
-                      },
-                    ),
+                    const VersionWidget(),
                   ],
                 ),
               ),
