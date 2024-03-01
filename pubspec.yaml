@@ -1,7 +1,7 @@
 name: auto_update_app
 description: "A new Flutter project."
 publish_to: 'none'
-version: 0.0.1
+version: 0.0.2
 
 environment:
   sdk: '>=3.3.0 <4.0.0'
