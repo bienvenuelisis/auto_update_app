@@ -53,11 +53,12 @@ class _LandingPageState extends State<LandingPage> {
     return const SafeArea(
       child: Scaffold(
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Center(
               child: CircularProgressIndicator.adaptive(),
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 24),
             Text('Checking for updates...'),
           ],
         ),

@@ -1,5 +1,6 @@
 {
     "package_name": "com.theresilientdev.auto_update_app",
-    "download_url": "https://github.com/bienvenuelisis/auto_update_app/releases/download/v0.0.2/app-release.apk",
+    "download_url": "https://f-droid.org/repo/io.keepalive.android_113.apk",
+    "download_url2": "https://github.com/bienvenuelisis/auto_update_app/releases/download/v0.0.2/app-release.apk",
     "version": "0.0.2"
 }

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:auto_update_app/utils/download_file.dart';
 import 'package:flutter/material.dart';
 import 'package:open_filex/open_filex.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import '../models/app_release.dart';
 import '../utils/save_apk_file.dart';
@@ -80,84 +81,99 @@ class _UpdateLatestVersionPageState extends State<UpdateLatestVersionPage> {
         return;
       },
       child: SafeArea(
-        child: Scaffold(
-          body: Center(
-            child: Padding(
-              padding: const EdgeInsets.only(
-                top: 20,
-                left: 10,
-                right: 10,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 20,
-                      right: 20,
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: Scaffold(
+            body: Center(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: 20,
+                  left: 10,
+                  right: 10,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Spacer(),
+                    const SizedBox(
+                      height: 10,
                     ),
-                    child: Column(
-                      children: [
-                        Center(
-                          child: Text(
-                            'Installing app ${widget.latestRelease.version} version ...',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
-                                ?.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 18,
-                                ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Center(
-                          child: Text(
-                            downloaded
-                                ? "Tap on \"Install\"."
-                                : 'Please wait, the app is being downloaded.',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
-                                ?.copyWith(
-                                  fontSize: 14,
-                                  color: Colors.grey,
-                                ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: LinearProgressIndicator(
-                      minHeight: 10,
-                      semanticsLabel: '${_downloadPercent * 100} %',
-                      color: Theme.of(context).colorScheme.primary,
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        Theme.of(context).colorScheme.primary,
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 20,
+                        right: 20,
                       ),
-                      value: _downloadPercent,
+                      child: Column(
+                        children: [
+                          Center(
+                            child: Text(
+                              'Installing version ${widget.latestRelease.version}...',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 18,
+                                  ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Center(
+                            child: Text(
+                              downloaded
+                                  ? "Tap on \"Install\"."
+                                  : 'Please wait, the app is being downloaded.',
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Center(child: Text('${(_downloadPercent * 100).ceil()} %')),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  ElevatedButton(
-                    onPressed: downloaded ? install : null,
-                    child: const Text("Installer"),
-                  ),
-                ],
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: LinearProgressIndicator(
+                        minHeight: 10,
+                        semanticsLabel: '${_downloadPercent * 100} %',
+                        color: Theme.of(context).colorScheme.primary,
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          Theme.of(context).colorScheme.primary,
+                        ),
+                        value: _downloadPercent,
+                      ),
+                    ),
+                    Center(child: Text('${(_downloadPercent * 100).ceil()} %')),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    ElevatedButton(
+                      onPressed: downloaded ? install : null,
+                      child: const Text("Install"),
+                    ),
+                    const Spacer(),
+                    FutureBuilder(
+                      future: PackageInfo.fromPlatform().then(
+                        (info) => info.version,
+                      ),
+                      builder: (_, snapshot) {
+                        if (!snapshot.hasData) {
+                          return const SizedBox();
+                        }
+
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'Version ${snapshot.data}',
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
