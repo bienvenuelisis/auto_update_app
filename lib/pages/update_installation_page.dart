@@ -24,7 +24,7 @@ class UpdateLatestVersionPage extends StatefulWidget {
 class _UpdateLatestVersionPageState extends State<UpdateLatestVersionPage> {
   double _downloadPercent = 0;
 
-  File? _applicationFile;
+  File? _releaseApkFile;
 
   @override
   void initState() {
@@ -33,7 +33,7 @@ class _UpdateLatestVersionPageState extends State<UpdateLatestVersionPage> {
     _downloadAndSaveLatestReleaseApkFile();
   }
 
-  bool get downloaded => _applicationFile != null;
+  bool get downloaded => _releaseApkFile != null;
 
   set downloadPercent(double value) {
     setState(() {
@@ -43,7 +43,7 @@ class _UpdateLatestVersionPageState extends State<UpdateLatestVersionPage> {
 
   Future<void> install() async {
     try {
-      OpenFilex.open(_applicationFile?.path);
+      OpenFilex.open(_releaseApkFile?.path);
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -65,7 +65,7 @@ class _UpdateLatestVersionPageState extends State<UpdateLatestVersionPage> {
     );
 
     setState(() {
-      _applicationFile = file;
+      _releaseApkFile = file;
     });
   }
 
